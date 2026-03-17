@@ -1,0 +1,3685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="I'm Not Okay — Collective Healing Institute. Clothing that starts real conversations about mental health. Every shirt carries a QR code that opens real support resources.">
+<meta property="og:title" content="I'm Not Okay — Collective Healing Institute">
+<meta property="og:description" content="Clothing that creates real conversations. A QR code that opens real support. A non-profit that puts every dollar where it counts.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.imnotokay.org">
+<title>I'm Not Okay — Collective Healing Institute</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=Fragment+Mono&family=Cormorant+Garamond:ital,wght@1,300;1,400;1,500&family=Syne:wght@400;500;700;800&family=Oswald:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #D42B2B;
+    --black: #0C0C0C;
+    --white: #F4F2ED;
+    --off: #1A1A1A;
+    --dim: rgba(244,242,237,0.4);
+    --mono: 'Fragment Mono', monospace;
+    --display: 'Bebas Neue', sans-serif;
+    --serif: 'Cormorant Garamond', serif;
+    --body: 'Syne', sans-serif;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+  /* Global mobile touch fixes */
+  a, button, [onclick] {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  input, button, textarea, select {
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--body);
+    overflow-x: hidden;
+  }
+
+  @media (pointer: fine) {
+    body { cursor: none; }
+    .cw-dot { cursor: none; }
+    .poc-cta { cursor: none; }
+  }
+
+  /* grain overlay removed for mobile compatibility */
+
+  /* SCREEN WASH — colorway glow */
+  #screenWash {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: var(--black);
+    opacity: 0;
+    transition: background 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.5s ease;
+    pointer-events: none;
+    mix-blend-mode: screen;
+  }
+
+  .cursor {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background: var(--red);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, background 0.2s;
+    display: none;
+  }
+  @media (pointer: fine) { .cursor { display: block; } }
+  .cursor.expand { width: 40px; height: 40px; background: rgba(212,43,43,0.3); border: 1px solid var(--red); }
+
+  /* ═══════════════════════════════
+     NAV
+  ═══════════════════════════════ */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    padding: 20px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  nav::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(12,12,12,0.97) 0%, transparent 100%);
+    pointer-events: none;
+  }
+  .nav-logo {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--white);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    position: relative;
+    z-index: 1;
+  }
+  .nav-logo strong { font-family: var(--serif); font-style: normal; font-weight: 300; color: var(--red); font-size: 15px; letter-spacing: 0.02em; }
+  .nav-right {
+    display: flex;
+    gap: 36px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  .nav-right a {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(244,242,237,0.4);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-right a:hover { color: var(--white); }
+  .nav-cta {
+    background: var(--red) !important;
+    color: white !important;
+    padding: 8px 18px !important;
+    font-family: var(--mono) !important;
+    font-size: 9px !important;
+    letter-spacing: 0.2em !important;
+    transition: opacity 0.2s !important;
+  }
+  .nav-cta:hover { opacity: 0.85; color: white !important; }
+
+  /* Hamburger */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    padding: 4px;
+    position: relative;
+    z-index: 201;
+    cursor: pointer;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 24px;
+    height: 1.5px;
+    background: var(--white);
+    transition: transform 0.3s, opacity 0.3s;
+    transform-origin: center;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  /* Mobile nav drawer */
+  .nav-drawer {
+    position: fixed;
+    inset: 0;
+    background: rgba(12,12,12,0.98);
+    z-index: 199;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+  .nav-drawer.open { opacity: 1; pointer-events: all; }
+  .nav-drawer a {
+    font-family: var(--display);
+    font-size: clamp(40px, 10vw, 64px);
+    letter-spacing: 0.08em;
+    color: rgba(244,242,237,0.35);
+    text-decoration: none;
+    transition: color 0.2s;
+    text-transform: uppercase;
+  }
+  .nav-drawer a:hover { color: var(--white); }
+  .nav-drawer .drawer-cta {
+    background: var(--red);
+    color: white !important;
+    font-family: var(--mono) !important;
+    font-size: 11px !important;
+    letter-spacing: 0.3em !important;
+    padding: 16px 40px !important;
+    text-transform: uppercase;
+  }
+  .nav-drawer .drawer-crisis {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-top: 20px;
+  }
+
+  @media(max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-right { display: none; }
+    .nav-hamburger { display: flex; }
+  }
+
+  /* ═══════════════════════════════
+     HERO
+  ═══════════════════════════════ */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 120px 48px 80px;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 40%, rgba(212,43,43,0.07) 0%, transparent 65%),
+      radial-gradient(ellipse 40% 40% at 15% 80%, rgba(212,43,43,0.04) 0%, transparent 60%);
+  }
+
+  .hero-statement {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+  .hs-im {
+    display: block;
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(48px, 8vw, 110px);
+    line-height: 1;
+    color: var(--white);
+    opacity: 0;
+    transform: translateY(32px);
+    animation: reveal 1s 0.2s cubic-bezier(0.16,1,0.3,1) forwards;
+    letter-spacing: -0.01em;
+  }
+  .hs-not {
+    display: block;
+    font-family: var(--serif);
+    font-style: normal;
+    font-weight: 300;
+    font-size: clamp(48px, 8vw, 110px);
+    line-height: 1;
+    color: var(--red);
+    letter-spacing: -0.01em;
+    opacity: 0;
+    transform: translateY(32px);
+    animation: reveal 1s 0.5s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+  .hs-okay {
+    display: block;
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(48px, 8vw, 110px);
+    line-height: 1.1;
+    color: var(--white);
+    opacity: 0;
+    transform: translateY(32px);
+    animation: reveal 1s 0.8s cubic-bezier(0.16,1,0.3,1) forwards;
+    letter-spacing: -0.01em;
+  }
+
+  @keyframes reveal { to { opacity: 1; transform: none; } }
+
+  .hero-sub {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(16px, 2vw, 20px);
+    font-weight: 300;
+    color: var(--dim);
+    margin-top: 48px;
+    letter-spacing: 0.04em;
+    opacity: 0;
+    animation: reveal 0.8s 1.2s ease forwards;
+    position: relative;
+    z-index: 2;
+    text-align: center;
+  }
+
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: reveal 0.8s 1.8s ease forwards;
+  }
+  .scroll-line {
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, var(--red), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.1); }
+  }
+  .scroll-label {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.3em;
+    color: rgba(244,242,237,0.25);
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+  }
+  .hero-chi {
+    position: absolute;
+    bottom: 40px;
+    right: 48px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.28em;
+    color: rgba(244,242,237,0.18);
+    text-transform: uppercase;
+    opacity: 0;
+    animation: reveal 0.8s 2s ease forwards;
+  }
+  @media(max-width: 768px) {
+    .hero { padding: 100px 24px 80px; }
+    .hero-chi { right: 24px; }
+  }
+
+  /* HERO CTA */
+  .hero-cta {
+    display: inline-block;
+    background: var(--red);
+    color: white;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    padding: 16px 44px;
+    text-decoration: none;
+    margin-top: 40px;
+    position: relative;
+    z-index: 2;
+    transition: opacity 0.2s, transform 0.2s;
+    opacity: 0;
+    animation: reveal 0.8s 1.5s ease forwards;
+    border: none;
+    cursor: pointer;
+  }
+  .hero-cta:hover { opacity: 0.85; transform: translateY(-1px); }
+
+  /* ═══════════════════════════════
+     MARQUEE
+  ═══════════════════════════════ */
+  .marquee-wrap {
+    overflow: hidden;
+    background: var(--red);
+    padding: 14px 0;
+  }
+  .marquee-track {
+    display: flex;
+    gap: 48px;
+    animation: marquee 20s linear infinite;
+    white-space: nowrap;
+  }
+  .marquee-word {
+    font-family: var(--display);
+    font-size: 18px;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.88);
+    flex-shrink: 0;
+    text-transform: uppercase;
+  }
+  .marquee-word.mw-black {
+    color: #0C0C0C;
+  }
+  .marquee-dot {
+    font-size: 8px;
+    color: rgba(255,255,255,0.35);
+    flex-shrink: 0;
+    align-self: center;
+  }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ═══════════════════════════════
+     SHIRT SECTION
+  ═══════════════════════════════ */
+  .shirt-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 90vh;
+  }
+
+  .shirt-left {
+    background: #111;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 48px 40px 40px;
+    position: relative;
+    border-right: 1px solid rgba(255,255,255,0.04);
+    gap: 0;
+    transition: background 0.6s cubic-bezier(0.16,1,0.3,1);
+    min-height: 90vh;
+  }
+
+  .shirt-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 72px;
+  }
+
+
+  .sr-eyebrow {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .sr-title {
+    font-family: var(--display);
+    font-size: clamp(52px, 6vw, 88px);
+    line-height: 0.92;
+    letter-spacing: 0.03em;
+    margin-bottom: 32px;
+  }
+  .sr-body {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--dim);
+    line-height: 1.85;
+    max-width: 400px;
+    margin-bottom: 40px;
+  }
+  .sr-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .sr-detail-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .sr-detail-dash { color: var(--red); font-family: var(--mono); font-size: 12px; flex-shrink: 0; }
+  .sr-detail-text { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; color: rgba(244,242,237,0.5); text-transform: uppercase; }
+
+  /* SHIRT CTA */
+  .shirt-cta {
+    display: inline-block;
+    background: var(--red);
+    color: white;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.2s;
+    border: none;
+    cursor: pointer;
+  }
+  .shirt-cta:hover { opacity: 0.85; transform: translateY(-1px); }
+
+  /* PRE-ORDER CARD — full-panel layout, no box */
+  .preorder-card {
+    width: 100%;
+    background: transparent;
+    border: none;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    flex: 1;
+    min-height: 0;
+  }
+  .preorder-card:hover .poc-shirt-svg {
+    transform: scale(1.03) translateY(-6px);
+    filter: drop-shadow(0 40px 90px rgba(0,0,0,0.95));
+  }
+  .poc-inner {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0;
+    flex: 1;
+    min-height: 0;
+  }
+  .poc-status {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--red);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    margin-bottom: 0;
+  }
+  .poc-status::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--red);
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+  .poc-brand {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: baseline;
+    padding: 16px 0 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    width: 100%;
+  }
+  .poc-im {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 22px;
+    color: var(--white);
+    line-height: 1;
+    letter-spacing: -0.01em;
+    transition: color 0.3s;
+  }
+  .poc-not {
+    font-family: var(--serif);
+    font-style: normal;
+    font-weight: 300;
+    font-size: 22px;
+    color: var(--red);
+    line-height: 1;
+    letter-spacing: -0.01em;
+    transition: color 0.3s;
+  }
+  .poc-okay {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 22px;
+    color: var(--white);
+    line-height: 1;
+    letter-spacing: -0.01em;
+    transition: color 0.3s;
+  }
+  .poc-chi {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(244,242,237,0.2);
+    transition: color 0.3s;
+    margin-left: auto;
+    align-self: baseline;
+  }
+  .poc-details {
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+    width: 100%;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .poc-detail-row {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 12px 0;
+    flex: 1;
+    border-right: 1px solid rgba(255,255,255,0.05);
+  }
+  .poc-detail-row:last-child { border-right: none; padding-left: 16px; }
+  .poc-detail-row:first-child { padding-right: 16px; }
+  .poc-detail-key {
+    font-family: var(--mono);
+    font-size: 7px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(244,242,237,0.2);
+    transition: color 0.3s;
+  }
+  .poc-detail-val {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(244,242,237,0.7);
+    transition: color 0.3s;
+  }
+
+  /* SIZE SELECTOR */
+  .poc-size-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    padding: 12px 0 8px;
+  }
+  .poc-size-label {
+    font-family: var(--mono);
+    font-size: 7px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(244,242,237,0.2);
+  }
+  .poc-sizes {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .size-btn {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: transparent;
+    color: rgba(244,242,237,0.4);
+    cursor: pointer;
+    transition: all 0.2s;
+    flex: 1;
+    text-align: center;
+    min-width: 0;
+  }
+  .size-btn:hover { border-color: rgba(255,255,255,0.35); color: var(--white); }
+  .size-btn.active { background: var(--red); border-color: var(--red); color: white; }
+
+  .poc-cta {
+    background: var(--red);
+    color: white;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 16px 0;
+    text-align: center;
+    transition: opacity 0.2s;
+    border: none;
+    width: 100%;
+    cursor: pointer;
+    margin-top: 4px;
+  }
+  .poc-cta:hover { opacity: 0.85; }
+
+  /* SHIRT SVG PREVIEW */
+  .poc-shirt-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+    flex: 1;
+    min-height: 300px;
+  }
+  .poc-shirt-svg {
+    width: min(360px, 82%);
+    height: auto;
+    filter: drop-shadow(0 28px 70px rgba(0,0,0,0.85));
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), filter 0.4s ease;
+  }
+
+  /* HEM TAG REVEAL PANEL */
+  .hem-reveal {
+    width: 100%;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16,1,0.3,1);
+    pointer-events: none;
+  }
+  .hem-reveal.visible {
+    opacity: 1;
+    transform: none;
+    pointer-events: all;
+  }
+  .hem-reveal-label {
+    font-family: var(--mono);
+    font-size: 7px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(244,242,237,0.18);
+    margin-bottom: 8px;
+  }
+  .hem-tags-row {
+    display: flex;
+    gap: 4px;
+    align-items: stretch;
+  }
+  .hem-tag-block {
+    flex: 1;
+    background: #D42B2B;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .hem-tag-side {
+    font-family: var(--mono);
+    font-size: 7px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+  }
+  .hem-tag-word {
+    font-family: var(--display);
+    font-size: clamp(18px, 2.5vw, 24px);
+    letter-spacing: 0.08em;
+    color: white;
+    line-height: 1;
+  }
+  .hem-tag-block.inside-tag {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+  }
+  .hem-tag-block.inside-tag .hem-tag-word { color: rgba(244,242,237,0.65); }
+  .hem-tag-block.inside-tag .hem-tag-side { color: rgba(244,242,237,0.2); }
+
+  /* COLORWAY DOTS */
+  .colorway-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 16px 0 6px;
+  }
+  .cw-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    transition: transform 0.2s, border-color 0.2s;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    flex-shrink: 0;
+  }
+  .cw-dot:hover { transform: scale(1.25); }
+  .cw-dot:active { transform: scale(0.92); }
+  .cw-dot.active { border-color: white; }
+  .cw-label-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 16px;
+  }
+  .cw-name {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    color: rgba(244,242,237,0.25);
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  @media(max-width: 900px) {
+    .shirt-section { grid-template-columns: 1fr; }
+    .shirt-left {
+      border-right: none;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      padding: 40px 24px 32px;
+      min-height: 75vh;
+    }
+    .shirt-right { padding: 60px 24px; }
+    .poc-shirt-svg { width: min(300px, 78vw); }
+    .poc-shirt-wrap { min-height: 240px; }
+  }
+  @media(max-width: 480px) {
+    .shirt-left { min-height: 70vh; padding: 32px 20px 24px; }
+    .poc-shirt-svg { width: min(260px, 76vw); }
+    .poc-shirt-wrap { min-height: 200px; }
+  }
+  .shirt-body-fill {
+    transition: fill 0.45s cubic-bezier(0.16,1,0.3,1);
+  }
+  .shirt-shadow-overlay {
+    fill: url(#shirtShade);
+    pointer-events: none;
+  }
+  .shirt-print-im {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 9px;
+    fill: rgba(244,242,237,0.9);
+    transition: fill 0.3s;
+  }
+  .shirt-print-not {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 9px;
+    fill: var(--red);
+    transition: fill 0.3s;
+  }
+  .shirt-print-okay {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 9px;
+    fill: rgba(244,242,237,0.9);
+    transition: fill 0.3s;
+  }
+  .shirt-hem-tag-fill { fill: #D42B2B; }
+
+  /* PANEL GLOW */
+  .shirt-panel-glow {
+    position: absolute;
+    width: 480px;
+    height: 480px;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    opacity: 0;
+    transition: background 0.5s ease, opacity 0.5s ease;
+    background: radial-gradient(ellipse, rgba(212,43,43,0.12) 0%, transparent 70%);
+  }
+
+  /* PROGRESS BAR */
+  .poc-progress-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+    padding: 10px 0 4px;
+  }
+  .poc-progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .poc-progress-label {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(244,242,237,0.25);
+  }
+  .poc-progress-count {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    color: var(--red);
+  }
+  .poc-progress-track {
+    height: 2px;
+    background: rgba(255,255,255,0.06);
+    position: relative;
+    overflow: hidden;
+  }
+  .poc-progress-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: var(--red);
+    width: 0%;
+    transition: width 1.4s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  /* ═══════════════════════════════
+     HEM TAG FEATURE (CSS kept for QR section reuse)
+  ═══════════════════════════════ */
+  .hem-section {
+    padding: 120px 48px;
+    background: var(--off);
+    position: relative;
+    overflow: hidden;
+  }
+  .hem-section::before {
+    content: 'ANXIOUS';
+    position: absolute;
+    top: -20px;
+    left: -10px;
+    font-family: var(--display);
+    font-size: 260px;
+    color: rgba(255,255,255,0.015);
+    letter-spacing: 0.02em;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .hem-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  @media(max-width: 900px) {
+    .hem-section { padding: 80px 24px; }
+    .hem-inner { grid-template-columns: 1fr; gap: 60px; }
+  }
+  .hem-text { position: relative; z-index: 2; }
+  .hem-eyebrow {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .hem-title {
+    font-family: var(--display);
+    font-size: clamp(48px, 6vw, 80px);
+    line-height: 0.92;
+    letter-spacing: 0.03em;
+    margin-bottom: 28px;
+  }
+  .hem-body {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 19px;
+    font-weight: 300;
+    color: var(--dim);
+    line-height: 1.85;
+    max-width: 420px;
+  }
+  .hem-visual {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .tag-card {
+    background: #111;
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 36px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: border-color 0.3s;
+  }
+  .tag-card:hover { border-color: rgba(212,43,43,0.4); }
+  .tag-card-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: rgba(244,242,237,0.25);
+    text-transform: uppercase;
+  }
+  .tag-card-value {
+    font-family: var(--display);
+    font-size: 42px;
+    letter-spacing: 0.06em;
+    line-height: 1;
+  }
+  .tag-card.outside .tag-card-value { color: var(--white); }
+  .tag-card.inside { background: var(--red); border-color: var(--red); }
+  .tag-card.inside .tag-card-label { color: rgba(255,255,255,0.5); }
+  .tag-card.inside .tag-card-value { color: white; }
+  .tag-card-note {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 14px;
+    color: rgba(244,242,237,0.3);
+    margin-top: 4px;
+  }
+  .tag-card.inside .tag-card-note { color: rgba(255,255,255,0.5); }
+
+  /* ═══════════════════════════════
+     QR SECTION
+  ═══════════════════════════════ */
+  .qr-section {
+    padding: 120px 48px;
+    background: var(--black);
+  }
+  @media(max-width: 900px) { .qr-section { padding: 80px 24px; } }
+  .qr-inner-stacked { max-width: 1200px; margin: 0 auto; }
+  .qr-bottom-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 80px;
+    align-items: start;
+    margin-top: 48px;
+  }
+  @media(max-width: 900px) { .qr-bottom-row { grid-template-columns: 1fr; gap: 40px; } }
+  .qr-body-col { display: flex; flex-direction: column; gap: 20px; justify-content: center; }
+  .qr-eyebrow {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .qr-title {
+    font-family: var(--display);
+    font-size: clamp(48px, 6vw, 80px);
+    line-height: 0.92;
+    letter-spacing: 0.03em;
+    margin-bottom: 28px;
+  }
+  .qr-body {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 19px;
+    font-weight: 300;
+    color: var(--dim);
+    line-height: 1.85;
+    max-width: 420px;
+    margin-bottom: 36px;
+  }
+  .qr-steps { display: flex; flex-direction: column; gap: 0; }
+  .qr-step {
+    display: flex;
+    gap: 20px;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    align-items: flex-start;
+  }
+  .qr-step-num {
+    font-family: var(--display);
+    font-size: 32px;
+    color: rgba(255,255,255,0.08);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 32px;
+  }
+  .qr-step-text {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: rgba(244,242,237,0.45);
+    text-transform: uppercase;
+    line-height: 1.6;
+    padding-top: 4px;
+  }
+  .qr-step-text span { color: var(--white); }
+  .qr-visual {
+    background: #111;
+    border: 1px solid rgba(255,255,255,0.06);
+    height: 360px;
+    min-width: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .qr-visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(212,43,43,0.06) 0%, transparent 70%);
+  }
+  .hang-tag-mock {
+    position: relative;
+    z-index: 2;
+    background: var(--white);
+    width: 120px;
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  }
+  .hang-tag-mock::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(0,0,0,0.2);
+    position: absolute;
+    top: -5px;
+  }
+  .ht-brand {
+    font-family: var(--display);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--black);
+    text-align: center;
+  }
+  .ht-qr {
+    display: grid;
+    grid-template-columns: repeat(7, 10px);
+    grid-template-rows: repeat(7, 10px);
+    gap: 1.5px;
+  }
+  .ht-qr div { border-radius: 1.5px; }
+  .ht-qr div.b { background: var(--black); }
+  .ht-qr div.w { background: transparent; }
+  .ht-scan {
+    font-family: var(--mono);
+    font-size: 7px;
+    letter-spacing: 0.15em;
+    color: var(--black);
+    text-transform: uppercase;
+    text-align: center;
+  }
+  .ht-chi {
+    font-family: var(--mono);
+    font-size: 6px;
+    letter-spacing: 0.2em;
+    color: rgba(12,12,12,0.4);
+    text-transform: uppercase;
+  }
+
+  /* ═══════════════════════════════
+     STATEMENT BREAK
+  ═══════════════════════════════ */
+  .statement-break {
+    background: var(--red);
+    padding: 80px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .statement-break::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(255,255,255,0.06) 0%, transparent 70%);
+  }
+  .sb-text {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(24px, 4vw, 42px);
+    font-weight: 300;
+    color: white;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+  .sb-attr {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+    margin-top: 28px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ═══════════════════════════════
+     EXPERIENCE SECTION
+  ═══════════════════════════════ */
+  .experience-section {
+    padding: 100px 48px;
+    background: var(--off);
+    max-width: 100%;
+  }
+  @media(max-width: 768px) { .experience-section { padding: 80px 24px; } }
+  .exp-step {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 40px;
+    align-items: start;
+    padding: 56px 0;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  @media(max-width: 600px) { .exp-step { grid-template-columns: 48px 1fr; gap: 20px; padding: 40px 0; } }
+  .exp-num {
+    font-family: var(--display);
+    font-size: 72px;
+    line-height: 1;
+    color: rgba(244,242,237,0.06);
+    letter-spacing: -0.02em;
+    padding-top: 6px;
+  }
+  .exp-title {
+    font-family: var(--display);
+    font-size: clamp(26px, 3.5vw, 44px);
+    letter-spacing: 0.04em;
+    line-height: 1;
+    margin-bottom: 18px;
+    color: var(--white);
+  }
+  .exp-body {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 19px;
+    font-weight: 300;
+    color: var(--dim);
+    line-height: 1.85;
+    max-width: 600px;
+  }
+  .exp-divider {
+    max-width: 900px;
+    margin: 0 auto;
+    height: 1px;
+    background: rgba(255,255,255,0.06);
+  }
+
+  /* ═══════════════════════════════
+     LAUNCH PAGES
+  ═══════════════════════════════ */
+  .launch-section {
+    padding: 120px 48px;
+    background: var(--off);
+  }
+  @media(max-width: 768px) { .launch-section { padding: 80px 24px; } }
+  .launch-title {
+    font-family: var(--display);
+    font-size: clamp(52px, 7vw, 96px);
+    line-height: 0.92;
+    letter-spacing: 0.03em;
+    margin-bottom: 20px;
+  }
+  .launch-sub {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--dim);
+    line-height: 1.8;
+    max-width: 560px;
+    margin-bottom: 64px;
+  }
+  .launch-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+  }
+  @media(max-width: 900px) { .launch-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media(max-width: 560px) { .launch-grid { grid-template-columns: 1fr; } }
+
+  .launch-card {
+    background: #111;
+    border: 1px solid rgba(255,255,255,0.05);
+    padding: 48px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 280px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+    cursor: pointer;
+  }
+  .launch-card:hover { border-color: rgba(212,43,43,0.35); transform: translateY(-2px); }
+  .launch-card::before {
+    content: attr(data-num);
+    position: absolute;
+    bottom: -20px;
+    right: -10px;
+    font-family: var(--display);
+    font-size: 120px;
+    color: rgba(255,255,255,0.03);
+    letter-spacing: -0.02em;
+    pointer-events: none;
+  }
+  .launch-card.live { border-color: rgba(212,43,43,0.4); }
+  .lc-status {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .lc-status.live-dot::before {
+    content: '● ';
+    color: var(--red);
+    font-size: 8px;
+  }
+  .lc-status.live-dot { color: var(--red); }
+  .lc-status.soon-dot { color: rgba(244,242,237,0.2); }
+  .lc-disorder {
+    font-family: var(--display);
+    font-size: 52px;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+  .launch-card.live .lc-disorder { color: var(--white); }
+  .launch-card:not(.live) .lc-disorder { color: rgba(244,242,237,0.22); }
+  .lc-response {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 16px;
+    font-weight: 300;
+  }
+  .launch-card.live .lc-response { color: var(--red); }
+  .launch-card:not(.live) .lc-response { color: rgba(244,242,237,0.15); }
+  .lc-bottom { margin-top: 32px; }
+  .lc-tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    transition: background 0.2s, color 0.2s;
+  }
+  .launch-card.live .lc-tag { background: var(--red); color: white; }
+  .launch-card.live:hover .lc-tag { background: white; color: var(--black); }
+  .launch-card:not(.live) .lc-tag { border: 1px solid rgba(255,255,255,0.08); color: rgba(244,242,237,0.2); }
+
+  /* ═══════════════════════════════
+     FUNDRAISER / IMPACT
+  ═══════════════════════════════ */
+  .fundraiser-section {
+    padding: 120px 48px;
+    background: var(--black);
+  }
+  @media(max-width: 768px) { .fundraiser-section { padding: 80px 24px; } }
+
+  .fundraiser-eyebrow {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .fundraiser-title {
+    font-family: var(--display);
+    font-size: clamp(52px, 7vw, 96px);
+    line-height: 0.92;
+    letter-spacing: 0.03em;
+    margin-bottom: 12px;
+  }
+  .fundraiser-sub {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--dim);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 52px;
+  }
+
+  /* Tabs */
+  .fr-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    margin-bottom: 48px;
+  }
+  .fr-tab {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 12px 24px;
+    background: none;
+    border: none;
+    color: rgba(244,242,237,0.25);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .fr-tab:hover { color: rgba(244,242,237,0.6); }
+  .fr-tab.active { color: var(--white); border-bottom-color: var(--red); }
+
+  .fr-panel { display: none; }
+  .fr-panel.active { display: block; }
+
+  /* Combined meter */
+  .fr-meter-wrap {
+    background: #111;
+    border: 1px solid rgba(255,255,255,0.05);
+    padding: 36px 40px;
+    margin-bottom: 3px;
+  }
+  @media(max-width: 600px) { .fr-meter-wrap { padding: 24px 20px; } }
+  .fr-meter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .fr-meter-total {
+    font-family: var(--display);
+    font-size: clamp(52px, 6vw, 80px);
+    line-height: 1;
+    color: var(--red);
+    letter-spacing: 0.02em;
+  }
+  .fr-meter-goal {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(244,242,237,0.2);
+    padding-bottom: 8px;
+  }
+  .fr-meter-track {
+    height: 3px;
+    background: rgba(255,255,255,0.06);
+    position: relative;
+    margin-bottom: 16px;
+  }
+  .fr-meter-fill {
+    position: absolute;
+    left: 0; top: 0; height: 100%;
+    background: var(--red);
+    width: 0%;
+    transition: width 1.6s cubic-bezier(0.16,1,0.3,1);
+  }
+  .fr-meter-sources {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .fr-source-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .fr-source-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .fr-source-label {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(244,242,237,0.3);
+  }
+  .fr-source-val {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    color: rgba(244,242,237,0.55);
+  }
+
+  /* Stats row */
+  .fr-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+    margin-bottom: 48px;
+  }
+  @media(max-width: 768px) { .fr-stats-grid { grid-template-columns: 1fr; } }
+  .fr-stat-card {
+    background: #111;
+    border: 1px solid rgba(255,255,255,0.05);
+    padding: 36px 32px;
+    transition: border-color 0.3s;
+  }
+  .fr-stat-card:hover { border-color: rgba(212,43,43,0.25); }
+  .fr-stat-num {
+    font-family: var(--display);
+    font-size: clamp(48px, 6vw, 72px);
+    line-height: 1;
+    color: var(--red);
+  }
+  .fr-stat-label {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--dim);
+    margin-top: 8px;
+  }
+  .fr-stat-sub {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(244,242,237,0.12);
+    margin-top: 12px;
+  }
+
+  /* Fundraiser event cards */
+  .fr-events-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .fr-events-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(244,242,237,0.25);
+  }
+  .fr-add-btn {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    background: none;
+    border: 1px solid rgba(212,43,43,0.35);
+    color: var(--red);
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .fr-add-btn:hover { background: var(--red); color: white; }
+
+  .fr-events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .fr-event-card {
+    background: #111;
+    border: 1px solid rgba(255,255,255,0.05);
+    padding: 28px 32px;
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    gap: 24px;
+    align-items: start;
+    transition: border-color 0.3s;
+  }
+  @media(max-width: 600px) { .fr-event-card { grid-template-columns: 1fr; gap: 12px; } }
+  .fr-event-card:hover { border-color: rgba(212,43,43,0.3); }
+  .fr-event-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 2px;
+  }
+  .fr-event-month {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--red);
+  }
+  .fr-event-day {
+    font-family: var(--display);
+    font-size: 36px;
+    line-height: 1;
+    color: var(--white);
+  }
+  .fr-event-body {}
+  .fr-event-name {
+    font-family: var(--display);
+    font-size: 22px;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+  .fr-event-desc {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--dim);
+    line-height: 1.6;
+  }
+  .fr-event-goal {
+    text-align: right;
+    padding-top: 2px;
+  }
+  .fr-event-goal-num {
+    font-family: var(--display);
+    font-size: 28px;
+    color: var(--red);
+    line-height: 1;
+  }
+  .fr-event-goal-label {
+    font-family: var(--mono);
+    font-size: 7px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(244,242,237,0.2);
+    margin-top: 4px;
+  }
+
+  .fr-empty {
+    background: #0e0e0e;
+    border: 1px dashed rgba(255,255,255,0.07);
+    padding: 40px;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(244,242,237,0.15);
+  }
+
+  /* Add fundraiser form */
+  .fr-form-wrap {
+    display: none;
+    background: #0e0e0e;
+    border: 1px solid rgba(212,43,43,0.2);
+    padding: 32px;
+    margin-bottom: 20px;
+    animation: fadeUp 0.35s ease forwards;
+  }
+  .fr-form-wrap.open { display: block; }
+  .fr-form-title {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 20px;
+  }
+  .fr-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  @media(max-width: 600px) { .fr-form-grid { grid-template-columns: 1fr; } }
+  .fr-form-full { grid-column: 1 / -1; }
+  .fr-input {
+    background: #111;
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--white);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    padding: 11px 14px;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .fr-input:focus { border-color: rgba(212,43,43,0.5); }
+  .fr-input::placeholder { color: rgba(244,242,237,0.15); }
+  .fr-form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 4px;
+  }
+  .fr-submit-btn {
+    background: var(--red);
+    color: white;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 11px 24px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .fr-submit-btn:hover { opacity: 0.85; }
+  .fr-cancel-btn {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.08);
+    color: rgba(244,242,237,0.3);
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 11px 20px;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .fr-cancel-btn:hover { color: var(--white); }
+
+  /* MODAL SHIRT PREVIEW */
+  /* ═══════════════════════════════
+     MODAL SHIRT VIEWER
+  ═══════════════════════════════ */
+  .modal-viewer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    padding: 0 0 32px;
+  }
+
+  /* Status + design name header */
+  .mv-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .mv-design-name {
+    font-family: var(--display);
+    font-size: clamp(36px, 5vw, 56px);
+    letter-spacing: 0.04em;
+    line-height: 1;
+    color: var(--white);
+    transition: opacity 0.3s;
+  }
+  .mv-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+  }
+  .mv-status {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+  }
+  .mv-status.available { color: var(--red); }
+  .mv-status.preorder  { color: rgba(244,242,237,0.4); }
+  .mv-status.soon      { color: rgba(244,242,237,0.2); }
+  .mv-word {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--red);
+  }
+
+  /* Large shirt display */
+  .mv-shirt-stage {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 0 24px;
+    min-height: 280px;
+  }
+  .mv-shirt-svg {
+    width: min(300px, 72vw);
+    max-width: 300px;
+    height: auto;
+    filter: drop-shadow(0 24px 64px rgba(0,0,0,0.75));
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .mv-shirt-svg.switching {
+    opacity: 0;
+    transform: scale(0.97) translateY(6px);
+  }
+
+  /* Prev / Next arrows */
+  .mv-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(244,242,237,0.5);
+    font-family: var(--mono);
+    font-size: 14px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    touch-action: manipulation;
+    flex-shrink: 0;
+  }
+  .mv-arrow:hover { background: rgba(212,43,43,0.15); border-color: rgba(212,43,43,0.4); color: var(--white); }
+  .mv-arrow.prev { left: 0; }
+  .mv-arrow.next { right: 0; }
+  @media(max-width: 480px) {
+    .mv-arrow { width: 52px; height: 52px; font-size: 18px; }
+    .mv-shirt-svg { max-width: 62vw; }
+  }
+
+  /* Dot indicators */
+  .mv-dots {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+  .mv-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .mv-dot.active { background: var(--red); transform: scale(1.3); }
+
+  /* Hem tag panel — same style as front page */
+  .mv-hem-row {
+    display: flex;
+    gap: 6px;
+    width: 100%;
+    margin-bottom: 28px;
+  }
+  .mv-hem-block {
+    flex: 1;
+    background: var(--red);
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    transition: background 0.3s;
+  }
+  .mv-hem-block.inside {
+    background: #161616;
+    border: 1px solid rgba(255,255,255,0.07);
+  }
+  .mv-hem-side {
+    font-family: var(--mono);
+    font-size: 7px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+  }
+  .mv-hem-block.inside .mv-hem-side { color: rgba(244,242,237,0.2); }
+  .mv-hem-word {
+    font-family: var(--display);
+    font-size: clamp(20px, 4vw, 28px);
+    letter-spacing: 0.08em;
+    color: white;
+    line-height: 1;
+    transition: opacity 0.25s;
+  }
+  .mv-hem-block.inside .mv-hem-word { color: rgba(244,242,237,0.7); }
+
+  /* Notify form */
+  .mv-notify {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .mv-notify-row {
+    display: flex;
+    gap: 0;
+  }
+  .mv-notify-input {
+    flex: 1;
+    background: #0e0e0e;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-right: none;
+    color: var(--white);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    padding: 14px 16px;
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+  .mv-notify-input:focus { border-color: rgba(212,43,43,0.5); }
+  .mv-notify-input::placeholder { color: rgba(244,242,237,0.2); }
+  .mv-notify-btn {
+    background: var(--red);
+    color: white;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 14px 20px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .mv-notify-btn:hover { opacity: 0.85; }
+  .mv-notify-note {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    color: rgba(244,242,237,0.15);
+    text-transform: uppercase;
+  }
+  .mv-success {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px;
+    background: rgba(212,43,43,0.08);
+    border: 1px solid rgba(212,43,43,0.2);
+  }
+  .mv-success.show { display: flex; }
+  .mv-success span {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red);
+  }
+
+  /* ═══════════════════════════════
+     COLLABORATION
+  ═══════════════════════════════ */
+  .collab-section {
+    padding: 120px 48px;
+    background: var(--black);
+  }
+  @media(max-width: 768px) { .collab-section { padding: 80px 24px; } }
+  .collab-eyebrow {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .collab-title {
+    font-family: var(--display);
+    font-size: clamp(52px, 7vw, 96px);
+    line-height: 0.92;
+    letter-spacing: 0.03em;
+    margin-bottom: 16px;
+  }
+  .collab-sub {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--dim);
+    line-height: 1.8;
+    max-width: 520px;
+    margin-bottom: 72px;
+  }
+  .collab-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3px;
+  }
+  @media(max-width: 768px) { .collab-grid { grid-template-columns: 1fr; } }
+
+  .collab-card {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 48px 40px 40px;
+    min-height: 520px;
+    gap: 24px;
+    transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+  }
+  .collab-card:hover { transform: translateY(-4px); }
+
+  /* Background shirt silhouette */
+  .collab-shirt-bg {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    opacity: 0.18;
+    pointer-events: none;
+  }
+
+  /* Large centered shirt */
+  .collab-shirt-main {
+    position: relative;
+    z-index: 2;
+    width: min(260px, 70%);
+    filter: drop-shadow(0 24px 56px rgba(0,0,0,0.7));
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  }
+  .collab-card:hover .collab-shirt-main { transform: scale(1.04) translateY(-6px); }
+
+  .collab-info {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .collab-partner {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(244,242,237,0.25);
+    margin-bottom: 6px;
+  }
+  .collab-name {
+    font-family: var(--display);
+    font-size: clamp(28px, 3.5vw, 42px);
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+  .collab-hem-mini {
+    display: flex;
+    gap: 4px;
+  }
+  .collab-hem-block {
+    padding: 8px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .collab-hem-side {
+    font-family: var(--mono);
+    font-size: 6px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    opacity: 0.5;
+  }
+  .collab-hem-word {
+    font-family: var(--display);
+    font-size: 16px;
+    letter-spacing: 0.06em;
+    line-height: 1;
+  }
+  .collab-tag {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 8px 18px;
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(244,242,237,0.35);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    align-self: flex-end;
+  }
+  .collab-tag:hover { background: var(--red); border-color: var(--red); color: white; }
+
+  /* Card-specific tints */
+  .collab-card.bca {
+    background: #0c0c0c;
+  }
+  .collab-card.bca::before {
+    content: '';
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(231,84,128,0.18) 0%, transparent 68%);
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .collab-card.cu {
+    background: #0c0c0c;
+  }
+  .collab-card.cu::before {
+    content: '';
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(207,184,124,0.16) 0%, transparent 68%);
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .collab-shirt-main { z-index: 2; }
+
+  ═══════════════════════════════ */
+  .close-section {
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 48px;
+    background: var(--off);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  @media(max-width: 768px) { .close-section { padding: 80px 24px; } }
+  .close-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(212,43,43,0.08) 0%, transparent 70%);
+  }
+  .close-im {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(32px, 6vw, 72px);
+    color: var(--white);
+    display: block;
+    line-height: 1;
+    position: relative;
+    z-index: 2;
+  }
+  .close-not {
+    font-family: var(--serif);
+    font-style: normal;
+    font-weight: 300;
+    font-size: clamp(32px, 6vw, 72px);
+    color: var(--red);
+    display: block;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    position: relative;
+    z-index: 2;
+  }
+  .close-okay {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(32px, 6vw, 72px);
+    color: var(--white);
+    display: block;
+    line-height: 1.1;
+    position: relative;
+    z-index: 2;
+  }
+  .close-and {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(18px, 2.5vw, 26px);
+    font-weight: 300;
+    color: var(--dim);
+    margin-top: 40px;
+    line-height: 1.75;
+    max-width: 480px;
+    position: relative;
+    z-index: 2;
+  }
+  .close-cta {
+    margin-top: 48px;
+    display: inline-block;
+    background: var(--red);
+    color: white;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 16px 40px;
+    text-decoration: none;
+    position: relative;
+    z-index: 2;
+    transition: opacity 0.2s;
+    border: none;
+    cursor: pointer;
+  }
+  .close-cta:hover { opacity: 0.85; }
+
+  /* ═══════════════════════════════
+     FOOTER
+  ═══════════════════════════════ */
+  footer {
+    background: #070707;
+    padding: 72px 48px 40px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+  @media(max-width: 768px) { footer { padding: 60px 24px 32px; } }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 64px;
+  }
+  @media(max-width: 768px) { .footer-top { grid-template-columns: 1fr; gap: 40px; } }
+  .f-logo-im { font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--white); display: block; line-height: 1; }
+  .f-logo-not { font-family: var(--serif); font-style: normal; font-weight: 300; font-size: 22px; color: var(--red); display: block; line-height: 1; }
+  .f-logo-okay { font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--white); display: block; line-height: 1.1; }
+  .f-chi { font-family: var(--mono); font-size: 8px; letter-spacing: 0.3em; color: rgba(244,242,237,0.18); text-transform: uppercase; margin-top: 16px; }
+  .footer-col h4 { font-family: var(--mono); font-size: 9px; letter-spacing: 0.3em; color: var(--red); text-transform: uppercase; margin-bottom: 20px; }
+  .footer-col p { font-family: var(--serif); font-size: 15px; font-style: italic; font-weight: 300; color: rgba(244,242,237,0.35); line-height: 1.85; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul a { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; color: rgba(244,242,237,0.3); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+  .footer-col ul a:hover { color: var(--white); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.04); padding-top: 28px; flex-wrap: wrap; gap: 16px; }
+  .footer-bottom span { font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em; color: rgba(244,242,237,0.15); text-transform: uppercase; }
+  .footer-bottom .crisis { color: var(--red) !important; }
+
+  /* ═══════════════════════════════
+     SCROLL REVEAL
+  ═══════════════════════════════ */
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1);
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* ═══════════════════════════════
+     SHOP MODAL
+  ═══════════════════════════════ */
+  .shop-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+  .shop-modal.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .shop-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(12,12,12,0.92);
+  }
+  .shop-panel {
+    position: relative;
+    z-index: 2;
+    background: #111;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-bottom: none;
+    width: 100%;
+    max-width: 860px;
+    max-height: 92vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    transform: translateY(60px);
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  }
+  .shop-modal.open .shop-panel { transform: translateY(0); }
+
+  .shop-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    position: sticky;
+    top: 0;
+    background: #111;
+    z-index: 3;
+  }
+  @media(max-width: 600px) { .shop-panel-header { padding: 20px 24px; } }
+  .shop-panel-title {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--red);
+  }
+  .shop-close {
+    background: none;
+    border: none;
+    color: rgba(244,242,237,0.4);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: color 0.2s;
+    padding: 4px 0;
+  }
+  .shop-close:hover { color: var(--white); }
+
+  .shop-panel-body {
+    padding: 40px;
+  }
+  @media(max-width: 600px) { .shop-panel-body { padding: 28px 24px; } }
+
+  /* Step labels */
+  .shop-step-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(244,242,237,0.25);
+    margin-bottom: 20px;
+  }
+
+  /* Design grid */
+  .shop-designs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+    margin-bottom: 40px;
+  }
+  @media(max-width: 600px) { .shop-designs { grid-template-columns: repeat(2, 1fr); } }
+
+  .design-card {
+    background: #0e0e0e;
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 20px 16px 16px;
+    cursor: pointer;
+    transition: border-color 0.25s, background 0.25s, transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  .design-card:hover {
+    border-color: rgba(212,43,43,0.5);
+    background: #141414;
+    transform: translateY(-3px);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+    z-index: 5;
+  }
+  .design-card.selected { border-color: var(--red); background: rgba(212,43,43,0.07); }
+  .design-card.unavailable { opacity: 0.45; }
+
+  /* Mini shirt inside each design card */
+  .dc-shirt-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 0 6px;
+  }
+  .dc-shirt-svg {
+    width: 110px;
+    height: auto;
+    filter: drop-shadow(0 8px 20px rgba(0,0,0,0.7));
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), filter 0.4s ease;
+    transform-origin: center 80%;
+    display: block;
+  }
+  .design-card:hover .dc-shirt-svg {
+    transform: scale(1.28) translateY(-8px);
+    filter: drop-shadow(0 18px 40px rgba(0,0,0,0.95));
+  }
+  @media(max-width: 600px) {
+    .dc-shirt-svg { width: 90px; }
+  }
+
+  .dc-name {
+    font-family: var(--display);
+    font-size: 28px;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    color: var(--white);
+  }
+  .dc-word {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--red);
+  }
+  .dc-badge {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    display: inline-block;
+    align-self: flex-start;
+  }
+  .dc-badge.available { background: rgba(212,43,43,0.15); color: var(--red); border: 1px solid rgba(212,43,43,0.3); }
+  .dc-badge.preorder { border: 1px solid rgba(255,255,255,0.1); color: rgba(244,242,237,0.35); }
+  .dc-badge.soon { border: 1px solid rgba(255,255,255,0.06); color: rgba(244,242,237,0.15); }
+
+  /* Selected design check */
+  .design-card.selected::after {
+    content: '✓';
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--red);
+  }
+
+  /* Shop config row */
+  .shop-config {
+    display: none;
+    flex-direction: column;
+    gap: 28px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    animation: fadeUp 0.4s ease forwards;
+  }
+  .shop-config.visible { display: flex; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .shop-config-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  @media(max-width: 600px) { .shop-config-row { grid-template-columns: 1fr; } }
+
+  .shop-field-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(244,242,237,0.25);
+    margin-bottom: 10px;
+  }
+  .shop-colorways {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .shop-cw-dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .shop-cw-dot:hover { transform: scale(1.2); }
+  .shop-cw-dot.active { border-color: white; }
+
+  .shop-sizes {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .shop-size-btn {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    padding: 7px 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: transparent;
+    color: rgba(244,242,237,0.4);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .shop-size-btn:hover { border-color: rgba(255,255,255,0.4); color: var(--white); }
+  .shop-size-btn.active { background: var(--red); border-color: var(--red); color: white; }
+
+  /* Availability line */
+  .shop-avail-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 20px;
+    background: rgba(212,43,43,0.06);
+    border: 1px solid rgba(212,43,43,0.2);
+  }
+  .shop-avail-line .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--red); flex-shrink: 0; animation: pulse-dot 2s infinite; }
+  .shop-avail-line span {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red);
+  }
+  .shop-avail-line.preorder { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.08); }
+  .shop-avail-line.preorder .dot { background: rgba(244,242,237,0.3); animation: none; }
+  .shop-avail-line.preorder span { color: rgba(244,242,237,0.35); }
+
+  /* Notify form */
+  .shop-notify-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .notify-field-row {
+    display: flex;
+    gap: 0;
+  }
+  .notify-input {
+    flex: 1;
+    background: #0e0e0e;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-right: none;
+    color: var(--white);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    padding: 13px 16px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .notify-input:focus { border-color: rgba(212,43,43,0.5); }
+  .notify-input::placeholder { color: rgba(244,242,237,0.2); }
+  .notify-submit {
+    background: var(--red);
+    color: white;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 13px 20px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+  }
+  .notify-submit:hover { opacity: 0.85; }
+  .notify-note {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    color: rgba(244,242,237,0.15);
+    text-transform: uppercase;
+  }
+
+  /* Success state */
+  .notify-success {
+    display: none;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    background: rgba(212,43,43,0.08);
+    border: 1px solid rgba(212,43,43,0.2);
+  }
+  .notify-success.show { display: flex; }
+  .notify-success span {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red);
+  }
+
+</style>
+</head>
+<body>
+
+<!-- CURSOR (desktop) -->
+<div class="cursor" id="cursor"></div>
+
+<!-- SCREEN WASH -->
+<div id="screenWash"></div>
+
+<!-- MOBILE NAV DRAWER -->
+<div class="nav-drawer" id="navDrawer">
+  <a href="#about" onclick="closeDrawer()">The Shirt</a>
+  <a href="#support" onclick="closeDrawer()">Support</a>
+  <a href="#impact" onclick="closeDrawer()">Impact</a>
+  <a href="#" class="drawer-cta" onclick="closeDrawer(); openShopModal(); return false;">Get the Shirt</a>
+  <div class="drawer-crisis">Crisis line · Call or text 988</div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">I'm <strong>Not</strong> Okay</a>
+  <div class="nav-right">
+    <a href="#about">About</a>
+    <a href="#support">Support</a>
+    <a href="#impact">Impact</a>
+    <a href="#" class="nav-cta" onclick="openShopModal(); return false;">Get the Shirt</a>
+  </div>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleDrawer()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-statement">
+    <span class="hs-im">I'm</span>
+    <span class="hs-not">Not</span>
+    <span class="hs-okay">Okay</span>
+  </div>
+  <p class="hero-sub">And that's okay. You don't have to be alone in it.</p>
+  <button class="hero-cta" onclick="openShopModal()">Get the Shirt</button>
+  <div class="hero-scroll-hint">
+    <div class="scroll-line"></div>
+    <span class="scroll-label">Scroll</span>
+  </div>
+  <div class="hero-chi">Collective Healing Institute</div>
+</section>
+
+<!-- RED MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-word mw-black">I'm Not Okay</span><span class="marquee-dot">·</span>
+    <span class="marquee-word">Anxiety</span><span class="marquee-dot">·</span>
+    <span class="marquee-word">Breathe</span><span class="marquee-dot">·</span>
+    <span class="marquee-word">Depression</span><span class="marquee-dot">·</span>
+    <span class="marquee-word">Connect</span><span class="marquee-dot">·</span>
+    <span class="marquee-word">Recovery</span><span class="marquee-dot">·</span>
+    <span class="marquee-word">Rebuild</span><span class="marquee-dot">·</span>
+    <span class="marquee-word mw-black">I'm Not Okay</span><span class="marquee-dot">·</span>
+    <span class="marquee-word">Anxiety</span><span class="marquee-dot">·</span>
+    <span class="marquee-word">Breathe</span><span class="marquee-dot">·</span>
+    <span class="marquee-word">Depression</span><span class="marquee-dot">·</span>
+    <span class="marquee-word">Connect</span><span class="marquee-dot">·</span>
+    <span class="marquee-word">Recovery</span><span class="marquee-dot">·</span>
+    <span class="marquee-word">Rebuild</span><span class="marquee-dot">·</span>
+  </div>
+</div>
+
+<!-- SHIRT SECTION -->
+<div class="shirt-section" id="about">
+
+  <!-- LEFT: copy -->
+  <div class="shirt-right">
+    <p class="sr-eyebrow reveal">The Shirt</p>
+    <div class="sr-title reveal reveal-delay-1">ONE<br>STATEMENT.<br>REAL<br>SUPPORT.</div>
+    <p class="sr-body reveal reveal-delay-2">Every shirt carries something hidden inside it. A name for what you're carrying. A message waiting for when you need it. A code that opens a door.</p>
+    <div class="sr-detail reveal reveal-delay-2">
+      <div class="sr-detail-row">
+        <span class="sr-detail-dash">—</span>
+        <span class="sr-detail-text">Three words on the chest. No explanation needed.</span>
+      </div>
+      <div class="sr-detail-row">
+        <span class="sr-detail-dash">—</span>
+        <span class="sr-detail-text">Hem tag names your struggle. Hidden from the world.</span>
+      </div>
+      <div class="sr-detail-row">
+        <span class="sr-detail-dash">—</span>
+        <span class="sr-detail-text">QR hang tag opens real resources, 24/7.</span>
+      </div>
+      <div class="sr-detail-row">
+        <span class="sr-detail-dash">—</span>
+        <span class="sr-detail-text">Unisex fit. 100% Cotton.</span>
+      </div>
+    </div>
+    <button class="shirt-cta reveal reveal-delay-3" onclick="openShopModal()">Pre-Order Now</button>
+  </div>
+
+  <!-- RIGHT: carousel shirt showcase (all designs) -->
+  <div class="shirt-left" id="shirtPanel">
+    <div class="shirt-panel-glow" id="shirtPanelGlow"></div>
+
+    <div class="poc-inner">
+
+      <!-- Header: design name + status -->
+      <div class="mv-header" style="width:100%;">
+        <div class="mv-design-name" id="mvDesignName">Anxiety</div>
+        <div class="mv-right">
+          <div class="mv-status available" id="mvStatus">● Available Now</div>
+          <div class="mv-word" id="mvWord">Breathe</div>
+        </div>
+      </div>
+
+      <!-- Large shirt with prev/next -->
+      <div class="mv-shirt-stage" style="flex:1; min-height:320px;">
+        <button class="mv-arrow prev" onclick="mvNav(-1)" aria-label="Previous">&#8592;</button>
+        <svg class="mv-shirt-svg" id="mvShirtSvg" viewBox="0 0 240 220" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="mvShade" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:rgba(255,255,255,0.07)"/>
+              <stop offset="50%" style="stop-color:rgba(255,255,255,0.00)"/>
+              <stop offset="100%" style="stop-color:rgba(0,0,0,0.22)"/>
+            </linearGradient>
+          </defs>
+          <path id="mvBodyFill"
+            d="M 120 10 Q 98 10 88 24 L 28 44 L 10 88 L 54 78 L 54 210 L 186 210 L 186 78 L 230 88 L 212 44 L 152 24 Q 142 10 120 10 Z"
+            fill="#1e1e1e" style="transition:fill 0.4s cubic-bezier(0.16,1,0.3,1)"/>
+          <path d="M 120 10 Q 98 10 88 24 L 28 44 L 10 88 L 54 78 L 54 210 L 186 210 L 186 78 L 230 88 L 212 44 L 152 24 Q 142 10 120 10 Z"
+            fill="url(#mvShade)" opacity="0.9"/>
+          <path d="M 88 24 Q 100 44 120 46 Q 140 44 152 24" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+          <path d="M 54 78 L 28 44" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+          <path d="M 186 78 L 212 44" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+          <text id="mvIm"   x="136" y="94"  font-family="Cormorant Garamond,serif" font-style="italic" font-size="9" fill="rgba(244,242,237,0.9)" style="transition:fill 0.3s">I'm</text>
+          <text id="mvNot"  x="136" y="107" font-family="Cormorant Garamond,serif" font-size="9" fill="#D42B2B" style="transition:fill 0.3s">Not</text>
+          <text id="mvOkay" x="136" y="120" font-family="Cormorant Garamond,serif" font-style="italic" font-size="9" fill="rgba(244,242,237,0.9)" style="transition:fill 0.3s">Okay</text>
+          <rect x="155" y="202" width="26" height="8" fill="#D42B2B" rx="0"/>
+          <text id="mvHemText" x="168" y="208" text-anchor="middle" font-family="monospace" font-size="4" fill="white" letter-spacing="0.4">BREATHE</text>
+        </svg>
+        <button class="mv-arrow next" onclick="mvNav(1)" aria-label="Next">&#8594;</button>
+      </div>
+
+      <!-- Dot navigation -->
+      <div class="mv-dots" id="mvDots"></div>
+
+      <!-- Hem tag panel -->
+      <div class="mv-hem-row">
+        <div class="mv-hem-block">
+          <div class="mv-hem-side">Outside — Red Tag</div>
+          <div class="mv-hem-word" id="mvHemOutside">BREATHE</div>
+        </div>
+        <div class="mv-hem-block inside">
+          <div class="mv-hem-side">Inside — Hidden</div>
+          <div class="mv-hem-word" id="mvHemInside">ANXIETY</div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <button class="poc-cta" onclick="openShopModal()" style="margin-top:8px;">Pre-Order This Shirt</button>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- QR / HANG TAG -->
+<section class="qr-section">
+  <div class="qr-inner-stacked">
+    <div class="qr-eyebrow reveal">The Hang Tag</div>
+    <div class="qr-title reveal reveal-delay-1">HELP IS<br>ONE SCAN<br>AWAY.</div>
+    <div class="qr-bottom-row">
+      <div class="qr-visual reveal">
+        <div class="hang-tag-mock">
+          <div class="ht-brand">CHI</div>
+          <div class="ht-qr">
+            <div class="b"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="b"></div>
+            <div class="b"></div><div class="w"></div><div class="w"></div><div class="w"></div><div class="w"></div><div class="w"></div><div class="b"></div>
+            <div class="b"></div><div class="w"></div><div class="b"></div><div class="w"></div><div class="b"></div><div class="w"></div><div class="b"></div>
+            <div class="b"></div><div class="w"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="w"></div><div class="b"></div>
+            <div class="b"></div><div class="w"></div><div class="b"></div><div class="w"></div><div class="b"></div><div class="w"></div><div class="b"></div>
+            <div class="b"></div><div class="w"></div><div class="w"></div><div class="w"></div><div class="w"></div><div class="w"></div><div class="b"></div>
+            <div class="b"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="b"></div>
+          </div>
+          <div class="ht-scan">Scan for support</div>
+          <div class="ht-chi">chi.org</div>
+        </div>
+      </div>
+      <div class="qr-body-col">
+        <p class="qr-body reveal">The hang tag carries a QR code built specifically for what that shirt represents. Scan it and it opens a page with breathing tools, real resources, crisis lines. Available whether you need it today — or months from now at 2am.</p>
+        <div class="qr-steps reveal reveal-delay-1">
+          <div class="qr-step">
+            <div class="qr-step-num">01</div>
+            <div class="qr-step-text"><span>Scan the tag</span> — any camera works. No app needed.</div>
+          </div>
+          <div class="qr-step">
+            <div class="qr-step-num">02</div>
+            <div class="qr-step-text"><span>Land on your page</span> — built for your specific shirt.</div>
+          </div>
+          <div class="qr-step">
+            <div class="qr-step-num">03</div>
+            <div class="qr-step-text"><span>Real support</span> — tools, hotlines, community. Always live.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATEMENT BREAK -->
+<div class="statement-break">
+  <p class="sb-text reveal">"Saying it out loud is the hardest part. Wearing it means you already did."</p>
+  <div class="sb-attr reveal reveal-delay-1">Collective Healing Institute</div>
+</div>
+
+<!-- THE EXPERIENCE -->
+<section class="experience-section">
+  <div class="exp-step reveal">
+    <div class="exp-num">01</div>
+    <div class="exp-content">
+      <div class="exp-title">YOU SAY IT.</div>
+      <p class="exp-body">Three words on the chest. No badge, no logo, no explanation required. Just the thing most people never say out loud — worn like it's the most natural thing in the world. Because it should be.</p>
+    </div>
+  </div>
+  <div class="exp-divider"></div>
+  <div class="exp-step reveal reveal-delay-1">
+    <div class="exp-num">02</div>
+    <div class="exp-content">
+      <div class="exp-title">THE SHIRT KNOWS WHAT YOU'RE CARRYING.</div>
+      <p class="exp-body">The hem tag names it. Anxiety. Depression. Grief. Whatever it is — it's there, acknowledged. And on the inside, hidden from everyone else, one quiet word is waiting. A reminder sewn in. Just for you.</p>
+    </div>
+  </div>
+  <div class="exp-divider"></div>
+  <div class="exp-step reveal reveal-delay-2">
+    <div class="exp-num">03</div>
+    <div class="exp-content">
+      <div class="exp-title">HELP IS ONE SCAN AWAY.</div>
+      <p class="exp-body">The hang tag carries a QR code. Scan it and it opens a page built for exactly what that shirt represents. Breathing tools, real resources, crisis lines. It's there whether you reach for it today or months from now at 2am.</p>
+    </div>
+  </div>
+</section>
+
+<!-- LAUNCH PAGES -->
+<section class="launch-section" id="support">
+  <div class="launch-title reveal">SUPPORT PAGES</div>
+  <p class="launch-sub reveal reveal-delay-2">We're launching with the ones that hit hardest. Each shirt links to its own page built with real resources, real tools, real support. More pages drop as we grow.</p>
+
+  <div class="launch-grid">
+    <div class="launch-card live reveal" data-num="01" onclick="openShopModalFor('Anxiety')">
+      <div>
+        <div class="lc-status live-dot">Live Now</div>
+        <div class="lc-disorder">Anxiety</div>
+        <div class="lc-response">Breathe</div>
+      </div>
+      <div class="lc-bottom"><span class="lc-tag">Get This Shirt</span></div>
+    </div>
+    <div class="launch-card reveal reveal-delay-1" data-num="02" onclick="openShopModalFor('Depression')">
+      <div>
+        <div class="lc-status soon-dot">Rolling Out</div>
+        <div class="lc-disorder">Depression</div>
+        <div class="lc-response">Connect</div>
+      </div>
+      <div class="lc-bottom"><span class="lc-tag">Pre-Order</span></div>
+    </div>
+    <div class="launch-card reveal reveal-delay-2" data-num="03" onclick="openShopModalFor('Recovery')">
+      <div>
+        <div class="lc-status soon-dot">Rolling Out</div>
+        <div class="lc-disorder">Recovery</div>
+        <div class="lc-response">Rebuild</div>
+      </div>
+      <div class="lc-bottom"><span class="lc-tag">Pre-Order</span></div>
+    </div>
+    <div class="launch-card reveal reveal-delay-1" data-num="04" onclick="openShopModalFor('Grief')">
+      <div>
+        <div class="lc-status soon-dot">Coming Soon</div>
+        <div class="lc-disorder">Grief</div>
+        <div class="lc-response">Honor</div>
+      </div>
+      <div class="lc-bottom"><span class="lc-tag">Notify Me</span></div>
+    </div>
+    <div class="launch-card reveal reveal-delay-2" data-num="05" onclick="openShopModalFor('Burnout')">
+      <div>
+        <div class="lc-status soon-dot">Coming Soon</div>
+        <div class="lc-disorder">Burnout</div>
+        <div class="lc-response">Rest</div>
+      </div>
+      <div class="lc-bottom"><span class="lc-tag">Notify Me</span></div>
+    </div>
+    <div class="launch-card reveal reveal-delay-3" data-num="06" onclick="openShopModalFor('Trauma')">
+      <div>
+        <div class="lc-status soon-dot">Coming Soon</div>
+        <div class="lc-disorder">Trauma</div>
+        <div class="lc-response">Ground</div>
+      </div>
+      <div class="lc-bottom"><span class="lc-tag">Notify Me</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FUNDRAISER & IMPACT -->
+<section class="fundraiser-section" id="impact">
+  <div class="fundraiser-eyebrow reveal">Year One</div>
+  <div class="fundraiser-title reveal reveal-delay-1">EVERY DOLLAR<br>IS TRACKED.</div>
+  <p class="fundraiser-sub reveal reveal-delay-2">Shirt sales and fundraisers feed the same mission. Watch it grow in real time.</p>
+
+  <!-- Tabs -->
+  <div class="fr-tabs reveal">
+    <button class="fr-tab active" onclick="switchFrTab('shirts', this)">Shirt Sales</button>
+    <button class="fr-tab" onclick="switchFrTab('fundraisers', this)">Fundraisers</button>
+  </div>
+
+  <!-- SHIRTS TAB -->
+  <div class="fr-panel active" id="frPanelShirts">
+    <div class="fr-meter-wrap reveal">
+      <div class="fr-meter-header">
+        <div class="fr-meter-total" id="frTotalDisplay">$2,205</div>
+        <div class="fr-meter-goal">Goal: $25,000 · Year One</div>
+      </div>
+      <div class="fr-meter-track">
+        <div class="fr-meter-fill" id="frMeterFill"></div>
+      </div>
+      <div class="fr-meter-sources">
+        <div class="fr-source-item">
+          <div class="fr-source-dot" style="background:var(--red)"></div>
+          <span class="fr-source-label">Shirt Sales —</span>
+          <span class="fr-source-val" id="frShirtVal">$2,205</span>
+        </div>
+        <div class="fr-source-item">
+          <div class="fr-source-dot" style="background:rgba(212,43,43,0.4)"></div>
+          <span class="fr-source-label">Fundraisers —</span>
+          <span class="fr-source-val" id="frFundVal">$0</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="fr-stats-grid">
+      <div class="fr-stat-card reveal">
+        <div class="fr-stat-num">147</div>
+        <div class="fr-stat-label">shirts pre-ordered</div>
+        <div class="fr-stat-sub">Target: 2,500 · First Drop</div>
+      </div>
+      <div class="fr-stat-card reveal reveal-delay-1">
+        <div class="fr-stat-num">250+</div>
+        <div class="fr-stat-label">therapy sessions funded</div>
+        <div class="fr-stat-sub">20% per shirt · Direct programs</div>
+      </div>
+      <div class="fr-stat-card reveal reveal-delay-2">
+        <div class="fr-stat-num">1,000</div>
+        <div class="fr-stat-label">community goal</div>
+        <div class="fr-stat-sub">Monthly Impact Club</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FUNDRAISERS TAB -->
+  <div class="fr-panel" id="frPanelFundraisers">
+    <div class="fr-meter-wrap reveal" style="margin-bottom:32px;">
+      <div class="fr-meter-header">
+        <div class="fr-meter-total" id="frTotalDisplay2">$2,205</div>
+        <div class="fr-meter-goal">Combined Goal: $25,000</div>
+      </div>
+      <div class="fr-meter-track">
+        <div class="fr-meter-fill" id="frMeterFill2"></div>
+      </div>
+      <div class="fr-meter-sources">
+        <div class="fr-source-item">
+          <div class="fr-source-dot" style="background:var(--red)"></div>
+          <span class="fr-source-label">Shirt Sales —</span>
+          <span class="fr-source-val">$2,205</span>
+        </div>
+        <div class="fr-source-item">
+          <div class="fr-source-dot" style="background:rgba(212,43,43,0.4)"></div>
+          <span class="fr-source-label">Fundraisers —</span>
+          <span class="fr-source-val" id="frFundVal2">$0</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="fr-events-header">
+      <span class="fr-events-label">Upcoming Fundraisers</span>
+      <button class="fr-add-btn" onclick="toggleFrForm()">+ Add Fundraiser</button>
+    </div>
+
+    <!-- Add form -->
+    <div class="fr-form-wrap" id="frForm">
+      <div class="fr-form-title">Add Fundraiser Event</div>
+      <div class="fr-form-grid">
+        <input class="fr-input" id="frName" placeholder="Event name" />
+        <input class="fr-input" id="frDate" placeholder="Date (e.g. Jun 14)" />
+        <input class="fr-input" id="frGoal" placeholder="Goal amount ($)" type="number" />
+        <input class="fr-input fr-form-full" id="frDesc" placeholder="Short description" />
+      </div>
+      <div class="fr-form-actions">
+        <button class="fr-submit-btn" onclick="addFundraiser()">Add Event</button>
+        <button class="fr-cancel-btn" onclick="toggleFrForm()">Cancel</button>
+      </div>
+    </div>
+
+    <div class="fr-events-list" id="frEventsList">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+
+</section>
+
+<!-- COLLABORATIONS -->
+<section class="collab-section" id="collabs">
+  <div class="collab-eyebrow reveal">Limited Drops</div>
+  <div class="collab-title reveal reveal-delay-1">COLLABS.</div>
+  <p class="collab-sub reveal reveal-delay-2">Same message. Same mission. Worn for the cause you carry. These limited drops blend our voice with movements that matter.</p>
+
+  <div class="collab-grid">
+
+    <!-- BREAST CANCER AWARENESS -->
+    <div class="collab-card bca reveal">
+      <!-- Large shirt SVG - black with pink tag -->
+      <svg class="collab-shirt-main" viewBox="0 0 240 220" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="collabShade1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:rgba(255,255,255,0.06)"/>
+            <stop offset="100%" style="stop-color:rgba(0,0,0,0.25)"/>
+          </linearGradient>
+        </defs>
+        <path d="M 120 10 Q 98 10 88 24 L 28 44 L 10 88 L 54 78 L 54 210 L 186 210 L 186 78 L 230 88 L 212 44 L 152 24 Q 142 10 120 10 Z" fill="#0c0c0c"/>
+        <path d="M 120 10 Q 98 10 88 24 L 28 44 L 10 88 L 54 78 L 54 210 L 186 210 L 186 78 L 230 88 L 212 44 L 152 24 Q 142 10 120 10 Z" fill="url(#collabShade1)" opacity="0.9"/>
+        <path d="M 88 24 Q 100 44 120 46 Q 140 44 152 24" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+        <path d="M 54 78 L 28 44" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <path d="M 186 78 L 212 44" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <!-- I'm — white -->
+        <text x="136" y="94"  font-family="Cormorant Garamond,serif" font-style="italic" font-size="9" fill="rgba(244,242,237,0.92)">I'm</text>
+        <!-- Not — pink -->
+        <text x="136" y="107" font-family="Cormorant Garamond,serif" font-size="9" fill="#E75480">Not</text>
+        <!-- Okay. — white -->
+        <text x="136" y="120" font-family="Cormorant Garamond,serif" font-style="italic" font-size="9" fill="rgba(244,242,237,0.92)">Okay</text>
+        <!-- Pink hem tag -->
+        <rect x="155" y="202" width="26" height="8" fill="#E75480" rx="0"/>
+        <text x="168" y="208" text-anchor="middle" font-family="monospace" font-size="4" fill="white" letter-spacing="0.4">FIGHT</text>
+      </svg>
+
+      <div class="collab-info">
+        <div>
+          <div class="collab-partner">Breast Cancer Awareness</div>
+          <div class="collab-name" style="color:#E75480;">In October<br><span style="color:var(--white);">We Fight.</span></div>
+        </div>
+        <div>
+          <div class="collab-hem-mini">
+            <div class="collab-hem-block" style="background:#E75480;">
+              <div class="collab-hem-side" style="color:rgba(255,255,255,0.55);">Outside</div>
+              <div class="collab-hem-word" style="color:white;">FIGHT</div>
+            </div>
+            <div class="collab-hem-block" style="background:#1a0a0e; border:1px solid rgba(231,84,128,0.2);">
+              <div class="collab-hem-side" style="color:rgba(231,84,128,0.5);">Inside</div>
+              <div class="collab-hem-word" style="color:#E75480;">SURVIVOR</div>
+            </div>
+          </div>
+          <button class="collab-tag" style="border-color:rgba(231,84,128,0.35); color:#E75480; margin-top:10px; display:block;" onclick="openShopModal()">Notify Me</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CU BUFFS -->
+    <div class="collab-card cu reveal reveal-delay-1">
+      <!-- Black shirt with gold tag -->
+      <svg class="collab-shirt-main" viewBox="0 0 240 220" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="collabShade2" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:rgba(255,255,255,0.05)"/>
+            <stop offset="100%" style="stop-color:rgba(0,0,0,0.35)"/>
+          </linearGradient>
+        </defs>
+        <path d="M 120 10 Q 98 10 88 24 L 28 44 L 10 88 L 54 78 L 54 210 L 186 210 L 186 78 L 230 88 L 212 44 L 152 24 Q 142 10 120 10 Z" fill="#111111"/>
+        <path d="M 120 10 Q 98 10 88 24 L 28 44 L 10 88 L 54 78 L 54 210 L 186 210 L 186 78 L 230 88 L 212 44 L 152 24 Q 142 10 120 10 Z" fill="url(#collabShade2)" opacity="0.8"/>
+        <path d="M 88 24 Q 100 44 120 46 Q 140 44 152 24" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+        <path d="M 54 78 L 28 44" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <path d="M 186 78 L 212 44" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <!-- I'm — white -->
+        <text x="136" y="94"  font-family="Cormorant Garamond,serif" font-style="italic" font-size="9" fill="rgba(244,242,237,0.92)">I'm</text>
+        <!-- Not — gold -->
+        <text x="136" y="107" font-family="Cormorant Garamond,serif" font-size="9" fill="#CFB87C">Not</text>
+        <!-- Okay. — white -->
+        <text x="136" y="120" font-family="Cormorant Garamond,serif" font-style="italic" font-size="9" fill="rgba(244,242,237,0.92)">Okay</text>
+        <!-- Gold hem tag with black lettering -->
+        <rect x="155" y="202" width="26" height="8" fill="#CFB87C" rx="0"/>
+        <text x="168" y="208" text-anchor="middle" font-family="monospace" font-size="4" fill="#0c0c0c" letter-spacing="0.4">BUFFS</text>
+      </svg>
+
+      <div class="collab-info">
+        <div>
+          <div class="collab-partner" style="color:#CFB87C;">— Potential Collab —</div>
+          <div class="collab-name" style="color:#CFB87C;">University<br><span style="color:var(--white);">Spirit Drop.</span></div>
+        </div>
+        <div>
+          <div class="collab-hem-mini">
+            <div class="collab-hem-block" style="background:#CFB87C;">
+              <div class="collab-hem-side" style="color:rgba(0,0,0,0.45);">Outside</div>
+              <div class="collab-hem-word" style="color:#0c0c0c;">BUFFS</div>
+            </div>
+            <div class="collab-hem-block" style="background:#141400; border:1px solid rgba(207,184,124,0.2);">
+              <div class="collab-hem-side" style="color:rgba(207,184,124,0.4);">Inside</div>
+              <div class="collab-hem-word" style="color:#CFB87C;">RISE</div>
+            </div>
+          </div>
+          <button class="collab-tag" style="background:#0c0c0c; border-color:rgba(207,184,124,0.5); color:#CFB87C; margin-top:10px; display:block;" onclick="openShopModal()">Notify Me</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- END -->
+<section class="close-section">
+  <span class="close-im">I'm</span>
+  <span class="close-not">Not</span>
+  <span class="close-okay">Okay</span>
+  <p class="close-and">And that's where it starts. Say it. Wear it. Let the shirt do the rest.</p>
+  <button class="close-cta" onclick="openShopModal()">Pre-Order Your Shirt</button>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-logo-block">
+      <span class="f-logo-im">I'm</span>
+      <span class="f-logo-not">Not</span>
+      <span class="f-logo-okay">Okay</span>
+      <div class="f-chi">Collective Healing Institute</div>
+    </div>
+    <div class="footer-col">
+      <h4>Mission</h4>
+      <p>Clothing that creates real conversations. A QR code that opens real support. A non-profit that puts every dollar where it counts.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="#about">The Shirt</a></li>
+        <li><a href="#support">Support Pages</a></li>
+        <li><a href="#impact">Impact</a></li>
+        <li><a href="#" onclick="openShopModal(); return false;">Pre-Order</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Collective Healing Institute</span>
+    <span class="crisis">Crisis line · Call or text 988</span>
+    <span>All proceeds tracked and reported</span>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════
+     SHOP MODAL
+═══════════════════════════════════════════ -->
+<div class="shop-modal" id="shopModal">
+  <div class="shop-overlay" onclick="closeShopModal()"></div>
+  <div class="shop-panel">
+    <div class="shop-panel-header">
+      <div class="shop-panel-title">Pre-Order / Get Notified</div>
+      <button class="shop-close" onclick="closeShopModal()">✕ Close</button>
+    </div>
+    <div class="shop-panel-body">
+      <div class="modal-viewer" id="modalViewer">
+
+        <!-- Status -->
+        <div class="poc-status" style="width:100%; margin-bottom:20px; border-bottom:1px solid rgba(255,255,255,0.06); padding-bottom:16px;">Pre-Order Open</div>
+
+        <!-- Single shirt SVG — color changes with colorway dots -->
+        <div class="mv-shirt-stage" style="min-height:260px;">
+          <svg class="mv-shirt-svg" id="shirtSvgFront" viewBox="0 0 240 220" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="shirtShade" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:rgba(255,255,255,0.07)"/>
+                <stop offset="50%" style="stop-color:rgba(255,255,255,0.00)"/>
+                <stop offset="100%" style="stop-color:rgba(0,0,0,0.2)"/>
+              </linearGradient>
+            </defs>
+            <path class="shirt-body-fill" id="shirtBodyFill"
+              d="M 120 10 Q 98 10 88 24 L 28 44 L 10 88 L 54 78 L 54 210 L 186 210 L 186 78 L 230 88 L 212 44 L 152 24 Q 142 10 120 10 Z"
+              fill="#1e1e1e" style="transition:fill 0.45s cubic-bezier(0.16,1,0.3,1)"/>
+            <path d="M 120 10 Q 98 10 88 24 L 28 44 L 10 88 L 54 78 L 54 210 L 186 210 L 186 78 L 230 88 L 212 44 L 152 24 Q 142 10 120 10 Z"
+              fill="url(#shirtShade)" opacity="0.9"/>
+            <path d="M 88 24 Q 100 44 120 46 Q 140 44 152 24" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+            <path d="M 54 78 L 28 44" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+            <path d="M 186 78 L 212 44" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+            <text id="svgShirtIm"   x="136" y="94"  class="shirt-print-im">I'm</text>
+            <text id="svgShirtNot"  x="136" y="107" class="shirt-print-not">Not</text>
+            <text id="svgShirtOkay" x="136" y="120" class="shirt-print-okay">Okay</text>
+            <rect id="shirtHemTagRect" x="155" y="202" width="26" height="8" fill="#D42B2B" rx="0"/>
+            <text id="shirtHemTagText" x="168" y="208" text-anchor="middle" font-family="monospace" font-size="4" fill="white" letter-spacing="0.4">BREATHE</text>
+          </svg>
+        </div>
+
+        <!-- Brand + CHI -->
+        <div class="poc-brand" id="pocBrand" style="border-bottom:1px solid rgba(255,255,255,0.06); padding-bottom:12px; margin-bottom:0; width:100%;">
+          <span class="poc-im">I'm</span>
+          <span class="poc-not">Not</span>
+          <span class="poc-okay">Okay</span>
+          <span class="poc-chi">Collective Healing Institute</span>
+        </div>
+
+        <!-- Details row -->
+        <div class="poc-details" style="margin-bottom:0; width:100%;">
+          <div class="poc-detail-row">
+            <span class="poc-detail-key">Colorway</span>
+            <span class="poc-detail-val" id="pocColorLabel">Obsidian Black</span>
+          </div>
+          <div class="poc-detail-row">
+            <span class="poc-detail-key">Fit</span>
+            <span class="poc-detail-val">Unisex</span>
+          </div>
+          <div class="poc-detail-row">
+            <span class="poc-detail-key">Drop</span>
+            <span class="poc-detail-val">Spring 2025</span>
+          </div>
+        </div>
+
+        <!-- Colorway dots -->
+        <div style="margin-top:20px;">
+          <div class="shop-field-label">Colorway</div>
+          <div class="colorway-row" style="justify-content:flex-start; padding:8px 0 4px;">
+            <div class="cw-dot active" style="background:#1e1e1e;" title="Obsidian" onclick="changeColorway('#1e1e1e','Obsidian Black','Anxiety','BREATHE',this)"></div>
+            <div class="cw-dot" style="background:#101828;" title="Midnight" onclick="changeColorway('#101828','Midnight Navy','Depression','CONNECT',this)"></div>
+            <div class="cw-dot" style="background:#ECEAE4;border:2px solid rgba(255,255,255,0.15);" title="Ash" onclick="changeColorway('#ECEAE4','Ash White','Recovery','REBUILD',this)"></div>
+            <div class="cw-dot" style="background:#1e2e1a;" title="Forest" onclick="changeColorway('#1e2e1a','Forest Green','Grief','HONOR',this)"></div>
+            <div class="cw-dot" style="background:#5C1A1A;" title="Maroon" onclick="changeColorway('#5C1A1A','Maroon','Burnout','REST',this)"></div>
+          </div>
+          <span class="cw-name" id="cwName" style="font-size:8px; letter-spacing:0.2em; color:rgba(244,242,237,0.25); text-transform:uppercase; font-family:var(--mono);">Obsidian Black</span>
+        </div>
+
+        <!-- Hem tag reveal -->
+        <div class="hem-reveal visible" id="hemReveal" style="margin-top:16px; max-width:100%;">
+          <div class="hem-reveal-label">Hem Tag — What's inside</div>
+          <div class="hem-tags-row">
+            <div class="hem-tag-block">
+              <div class="hem-tag-side">Outside</div>
+              <div class="hem-tag-word" id="hemOutsideWord">BREATHE</div>
+            </div>
+            <div class="hem-tag-block inside-tag">
+              <div class="hem-tag-side">Inside</div>
+              <div class="hem-tag-word" id="hemInsideWord">ANXIETY</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Size selector -->
+        <div class="poc-size-wrap" style="margin-top:16px;">
+          <div class="poc-size-label">Select Size</div>
+          <div class="poc-sizes" id="pocSizes">
+            <button class="size-btn" onclick="selectCardSize(this,'XS')">XS</button>
+            <button class="size-btn" onclick="selectCardSize(this,'S')">S</button>
+            <button class="size-btn active" onclick="selectCardSize(this,'M')">M</button>
+            <button class="size-btn" onclick="selectCardSize(this,'L')">L</button>
+            <button class="size-btn" onclick="selectCardSize(this,'XL')">XL</button>
+            <button class="size-btn" onclick="selectCardSize(this,'2XL')">2XL</button>
+          </div>
+        </div>
+
+        <!-- Progress bar -->
+        <div class="poc-progress-wrap" id="pocProgress" style="margin-top:12px;">
+          <div class="poc-progress-header">
+            <span class="poc-progress-label">Pre-orders placed</span>
+            <span class="poc-progress-count">147 / 2,500</span>
+          </div>
+          <div class="poc-progress-track">
+            <div class="poc-progress-fill" id="pocProgressFill"></div>
+          </div>
+        </div>
+
+        <!-- Notify form -->
+        <div class="mv-notify" style="margin-top:20px;">
+          <div class="mv-notify-row">
+            <input class="mv-notify-input" id="mvEmail" type="email" placeholder="your@email.com" autocomplete="email">
+            <button class="mv-notify-btn" onclick="mvSubmit()">Notify Me</button>
+          </div>
+          <div class="mv-notify-note">We'll reach out when your shirt is ready to ship. No spam.</div>
+          <div class="mv-success" id="mvSuccess">
+            <div style="width:7px;height:7px;border-radius:50%;background:var(--red);flex-shrink:0;"></div>
+            <span id="mvSuccessMsg">You're on the list. We'll be in touch.</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ——— CURSOR ——— */
+  const cursor = document.getElementById('cursor');
+  if (window.matchMedia('(pointer: fine)').matches) {
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+    document.querySelectorAll('a, button, .cw-dot, .launch-card, .tag-card, .poc-cta, .design-card, .shop-cw-dot, .shop-size-btn, .size-btn').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('expand'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('expand'));
+    });
+  }
+
+  /* ——— SCROLL REVEAL ——— */
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
+
+  // Animate progress bar when card scrolls in
+  const progressFill = document.getElementById('pocProgressFill');
+  const progressObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        setTimeout(() => { progressFill.style.width = '5.88%'; }, 300); // 147/2500
+        progressObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  if (progressFill) progressObserver.observe(progressFill);
+
+  /* ——— MOBILE NAV ——— */
+  const drawer = document.getElementById('navDrawer');
+  const hamburger = document.getElementById('hamburger');
+  function toggleDrawer() {
+    drawer.classList.toggle('open');
+    hamburger.classList.toggle('open');
+  }
+  function closeDrawer() {
+    drawer.classList.remove('open');
+    hamburger.classList.remove('open');
+  }
+
+  /* ——— PREORDER CARD COLORWAY ——— */
+  const MAROON = '#5C1A1A';
+  const ASH    = '#ECEAE4';
+
+  function applyShirtColors(hex, imEl, notEl, okayEl) {
+    const isLight  = hex === ASH;
+    const isMaroon = hex === MAROON;
+    if (isLight) {
+      // Ash White: show dark text so it reads on pale shirt
+      imEl.style.fill   = 'rgba(12,12,12,0.8)';
+      notEl.style.fill  = '#D42B2B';
+      okayEl.style.fill = 'rgba(12,12,12,0.8)';
+    } else if (isMaroon) {
+      // Maroon: I'm white · Not BLACK · Okay white
+      imEl.style.fill   = 'rgba(244,242,237,0.92)';
+      notEl.style.fill  = '#0C0C0C';
+      okayEl.style.fill = 'rgba(244,242,237,0.92)';
+    } else {
+      // All other dark shirts: I'm white · Not RED · Okay white
+      imEl.style.fill   = 'rgba(244,242,237,0.92)';
+      notEl.style.fill  = '#D42B2B';
+      okayEl.style.fill = 'rgba(244,242,237,0.92)';
+    }
+  }
+
+  function applyCardBrandColors(hex, im, notEl, okay) {
+    // Modal is always dark bg — text always white
+    im.style.color   = '';
+    okay.style.color = '';
+    // Brand "Not" is always red regardless of colorway (SVG shirt handles per-colorway separately)
+    notEl.style.color = 'var(--red)';
+  }
+
+  // Colorway → disorder/word map (also set by dot onclick params)
+  const COLORWAY_HEM = {
+    '#1e1e1e': { disorder: 'Anxiety',    outside: 'BREATHE', inside: 'ANXIETY'    },
+    '#101828': { disorder: 'Depression', outside: 'CONNECT',  inside: 'DEPRESSION' },
+    '#ECEAE4': { disorder: 'Recovery',   outside: 'REBUILD',  inside: 'RECOVERY'   },
+    '#1e2e1a': { disorder: 'Grief',      outside: 'HONOR',    inside: 'GRIEF'      },
+    '#5C1A1A': { disorder: 'Burnout',    outside: 'REST',     inside: 'BURNOUT'    },
+  };
+
+  function changeColorway(hex, label, disorder, outside, el) {
+    const card      = document.getElementById('preorderCard');
+    const brand     = document.getElementById('pocBrand');
+    const wash      = document.getElementById('screenWash');
+    const panel     = document.getElementById('shirtPanel');
+    const glow      = document.getElementById('shirtPanelGlow');
+    const shirtFill = document.getElementById('shirtBodyFill');
+    const svgIm     = document.getElementById('svgShirtIm');
+    const svgNot    = document.getElementById('svgShirtNot');
+    const svgOkay   = document.getElementById('svgShirtOkay');
+    const hemData   = COLORWAY_HEM[hex] || COLORWAY_HEM['#1e1e1e'];
+    const isLight   = hex === ASH;
+
+    // ── Full-screen color glow ──
+    wash.style.background = isLight ? '#C8C6C0' : hex;
+    wash.style.opacity    = isLight ? '0.1' : '0.38';
+    clearTimeout(wash._fadeTimer);
+    wash._fadeTimer = setTimeout(() => { wash.style.opacity = '0'; }, 1600);
+
+    // ── SVG shirt fill ──
+    shirtFill.setAttribute('fill', hex);
+
+    // ── SVG shirt text colors ──
+    applyShirtColors(hex, svgIm, svgNot, svgOkay);
+
+    // ── Hem tag word on shirt SVG ──
+    const hemText = document.getElementById('shirtHemTagText');
+    if (hemText) hemText.textContent = hemData.outside;
+
+    // ── Hem reveal panel ──
+    const outsideEl = document.getElementById('hemOutsideWord');
+    const insideEl  = document.getElementById('hemInsideWord');
+    if (outsideEl) outsideEl.textContent = hemData.outside;
+    if (insideEl)  insideEl.textContent  = hemData.inside;
+    const hemReveal = document.getElementById('hemReveal');
+    if (hemReveal) {
+      hemReveal.classList.remove('visible');
+      void hemReveal.offsetWidth; // reflow for re-animation
+      hemReveal.classList.add('visible');
+    }
+
+    // ── Panel background tint (modal panel) ──
+    const modalPanel = document.querySelector('.shop-panel');
+    if (modalPanel) {
+      modalPanel.style.background = isLight ? '#181816' : blendHex(hex, '#111111', 0.12);
+    }
+
+    // ── Panel glow (main page, if visible) ──
+    if (glow) {
+      glow.style.background = `radial-gradient(ellipse, ${hexToRgba(hex, isLight ? 0.08 : 0.18)} 0%, transparent 70%)`;
+      glow.style.opacity    = '1';
+    }
+
+    // ── Card background — now the modal body ──
+    const modalBody = document.querySelector('.modal-viewer');
+    // No card bg to change — the modal panel handles it above
+
+    // ── Brand text ──
+    const im    = brand.querySelector('.poc-im');
+    const notBr = brand.querySelector('.poc-not');
+    const okay  = brand.querySelector('.poc-okay');
+    applyCardBrandColors(hex, im, notBr, okay);
+
+    // ── Supporting text — always white (modal is always dark bg) ──
+    const chi       = document.querySelector('.poc-chi');
+    const keys      = document.querySelectorAll('.poc-detail-key');
+    const sizeLabel = document.querySelector('.poc-size-label');
+    if (chi) chi.style.color = '';
+    keys.forEach(k => k.style.color = '');
+    if (sizeLabel) sizeLabel.style.color = '';
+    const pocColorLbl = document.getElementById('pocColorLabel');
+    if (pocColorLbl) pocColorLbl.style.color = '';
+    document.querySelectorAll('.poc-detail-val').forEach(v => v.style.color = '');
+    document.querySelectorAll('.poc-progress-label').forEach(v => v.style.color = '');
+    document.querySelectorAll('.size-btn:not(.active)').forEach(b => {
+      b.style.borderColor = ''; b.style.color = '';
+    });
+
+    document.getElementById('pocColorLabel').textContent = label;
+    document.getElementById('cwName').textContent = label;
+    document.querySelectorAll('.cw-dot').forEach(d => d.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  // Blend two hex colors: amount 0=hex2, 1=hex1
+  function blendHex(hex1, hex2, amount) {
+    const r1 = parseInt(hex1.slice(1,3),16), g1 = parseInt(hex1.slice(3,5),16), b1 = parseInt(hex1.slice(5,7),16);
+    const r2 = parseInt(hex2.slice(1,3),16), g2 = parseInt(hex2.slice(3,5),16), b2 = parseInt(hex2.slice(5,7),16);
+    const r = Math.round(r2 + (r1-r2)*amount);
+    const g = Math.round(g2 + (g1-g2)*amount);
+    const b = Math.round(b2 + (b1-b2)*amount);
+    return `rgb(${r},${g},${b})`;
+  }
+
+  function hexToRgba(hex, alpha) {
+    const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+    return `rgba(${r},${g},${b},${alpha})`;
+  }
+
+  /* ——— DESIGN → HEM TAG MAPPING ———
+     Hem tag (red) shows the HIDDEN WORD (breathe, connect…)
+     Inside the tag reads the CONDITION (anxiety, depression…) */
+  const DESIGN_HEM = {
+    'Anxiety':    { word: 'BREATHE',  condition: 'ANXIETY'    },
+    'Depression': { word: 'CONNECT',  condition: 'DEPRESSION' },
+    'Recovery':   { word: 'REBUILD',  condition: 'RECOVERY'   },
+    'Grief':      { word: 'HONOR',    condition: 'GRIEF'      },
+    'Burnout':    { word: 'REST',     condition: 'BURNOUT'    },
+    'Trauma':     { word: 'GROUND',   condition: 'TRAUMA'     },
+  };
+
+  function updateHemTags(design) {
+    const data = DESIGN_HEM[design] || DESIGN_HEM['Anxiety'];
+    // Card shirt hem tag
+    const tagText = document.getElementById('shirtHemTagText');
+    if (tagText) tagText.textContent = data.word;
+    // Modal shirt hem tag
+    const modalTagText = document.querySelector('#modalShirtSvg text:last-of-type');
+    if (modalTagText) modalTagText.textContent = data.word;
+  }
+  function selectCardSize(btn, size) {
+    document.querySelectorAll('#pocSizes .size-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  /* ——— MODAL VIEWER (carousel) ——— */
+  const MV_DESIGNS = [
+    { design:'Anxiety',    status:'available', word:'Breathe',  outside:'BREATHE', inside:'ANXIETY',    color:'#1e1e1e', notColor:'#D42B2B' },
+    { design:'Depression', status:'preorder',  word:'Connect',  outside:'CONNECT',  inside:'DEPRESSION', color:'#101828', notColor:'#D42B2B' },
+    { design:'Recovery',   status:'preorder',  word:'Rebuild',  outside:'REBUILD',  inside:'RECOVERY',   color:'#ECEAE4', notColor:'#D42B2B' },
+    { design:'Grief',      status:'soon',      word:'Honor',    outside:'HONOR',    inside:'GRIEF',      color:'#1e2e1a', notColor:'#D42B2B' },
+    { design:'Burnout',    status:'soon',      word:'Rest',     outside:'REST',     inside:'BURNOUT',    color:'#5C1A1A', notColor:'#0C0C0C' },
+    { design:'Trauma',     status:'soon',      word:'Ground',   outside:'GROUND',   inside:'TRAUMA',     color:'#0C0C0C', notColor:'#D42B2B' },
+  ];
+  let mvIndex = 0;
+
+  function mvInit() {
+    // Build dots
+    const dotsEl = document.getElementById('mvDots');
+    dotsEl.innerHTML = '';
+    MV_DESIGNS.forEach((_, i) => {
+      const d = document.createElement('button');
+      d.className = 'mv-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', MV_DESIGNS[i].design);
+      d.onclick = () => mvGoTo(i);
+      dotsEl.appendChild(d);
+    });
+    mvRender(0, false);
+  }
+
+  function mvNav(dir) {
+    const next = (mvIndex + dir + MV_DESIGNS.length) % MV_DESIGNS.length;
+    mvGoTo(next);
+  }
+
+  function mvGoTo(i) {
+    if (i === mvIndex) return;
+    mvIndex = i;
+    mvRender(i, true);
+    // reset notify form on design change
+    document.getElementById('mvEmail').value = '';
+    document.getElementById('mvEmail').style.borderColor = '';
+    document.getElementById('mvSuccess').classList.remove('show');
+  }
+
+  function mvRender(i, animate) {
+    const d = MV_DESIGNS[i];
+    const svg = document.getElementById('mvShirtSvg');
+    const isLight = d.color === '#ECEAE4';
+
+    if (animate) {
+      svg.classList.add('switching');
+      setTimeout(() => {
+        _mvApply(d, isLight);
+        svg.classList.remove('switching');
+      }, 220);
+    } else {
+      _mvApply(d, isLight);
+    }
+
+    // Update dots
+    document.querySelectorAll('.mv-dot').forEach((dot, idx) => {
+      dot.classList.toggle('active', idx === i);
+    });
+  }
+
+  function _mvApply(d, isLight) {
+    // Shirt fill
+    document.getElementById('mvBodyFill').setAttribute('fill', d.color);
+
+    // Text colors
+    const imFill   = isLight ? 'rgba(12,12,12,0.75)' : 'rgba(244,242,237,0.92)';
+    const okFill   = isLight ? 'rgba(12,12,12,0.75)' : 'rgba(244,242,237,0.92)';
+    document.getElementById('mvIm').style.fill   = imFill;
+    document.getElementById('mvNot').style.fill  = d.notColor;
+    document.getElementById('mvOkay').style.fill = okFill;
+
+    // Hem text on SVG
+    document.getElementById('mvHemText').textContent = d.outside;
+
+    // Header
+    document.getElementById('mvDesignName').textContent = d.design;
+    document.getElementById('mvWord').textContent = d.word;
+
+    // Status badge
+    const statusEl = document.getElementById('mvStatus');
+    statusEl.className = 'mv-status ' + d.status;
+    statusEl.textContent = d.status === 'available' ? '● Available Now'
+                         : d.status === 'preorder'  ? '◌ Pre-Order'
+                         : '— Coming Soon';
+
+    // Hem tag panel
+    document.getElementById('mvHemOutside').textContent = d.outside;
+    document.getElementById('mvHemInside').textContent  = d.inside;
+  }
+
+  function mvSubmit() {
+    const email = document.getElementById('mvEmail').value.trim();
+    if (!email || !email.includes('@')) {
+      document.getElementById('mvEmail').style.borderColor = 'rgba(212,43,43,0.6)';
+      return;
+    }
+    document.getElementById('mvEmail').style.borderColor = '';
+    const d = MV_DESIGNS[mvIndex];
+    const msg = d.status === 'available'
+      ? `You're on the list for ${d.design}. We'll reach out when it ships.`
+      : `Noted. We'll email you the moment ${d.design} drops.`;
+    document.getElementById('mvSuccessMsg').textContent = msg;
+    document.getElementById('mvSuccess').classList.add('show');
+    document.getElementById('mvEmail').value = '';
+  }
+
+  // Init carousel directly — script is at bottom of page so DOM is already ready
+  mvInit();
+
+  const stage = document.querySelector('.mv-shirt-stage');
+  if (stage) {
+    let mvTouchX = null;
+    stage.addEventListener('touchstart', e => { mvTouchX = e.touches[0].clientX; }, { passive: true });
+    stage.addEventListener('touchend', e => {
+      if (mvTouchX === null) return;
+      const dx = e.changedTouches[0].clientX - mvTouchX;
+      if (Math.abs(dx) > 40) mvNav(dx < 0 ? 1 : -1);
+      mvTouchX = null;
+    }, { passive: true });
+  }
+
+  /* ——— SHOP MODAL (open/close) ——— */
+  const modal = document.getElementById('shopModal');
+
+  function openShopModal() {
+    modal.classList.add('open');
+  }
+
+  function openShopModalFor(design) {
+    openShopModal();
+  }
+
+  function closeShopModal() {
+    modal.classList.remove('open');
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeShopModal(); });
+
+
+
+  /* ——— FUNDRAISER TAB ——— */
+  const SHIRT_RAISED = 2205;   // $15/shirt × 147 pre-orders
+  const GOAL         = 25000;
+  let fundraiserTotal = 0;
+  let fundraisers = [];
+
+  function switchFrTab(tab, btn) {
+    document.querySelectorAll('.fr-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.fr-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(tab === 'shirts' ? 'frPanelShirts' : 'frPanelFundraisers').classList.add('active');
+  }
+
+  function toggleFrForm() {
+    const f = document.getElementById('frForm');
+    f.classList.toggle('open');
+  }
+
+  function addFundraiser() {
+    const name  = document.getElementById('frName').value.trim();
+    const date  = document.getElementById('frDate').value.trim();
+    const goal  = parseFloat(document.getElementById('frGoal').value) || 0;
+    const desc  = document.getElementById('frDesc').value.trim();
+    if (!name || !date) return;
+
+    fundraisers.push({ name, date, goal, desc, raised: 0 });
+    fundraiserTotal += goal;
+    renderFundraisers();
+    updateMeters();
+
+    // clear form
+    ['frName','frDate','frGoal','frDesc'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('frForm').classList.remove('open');
+  }
+
+  function renderFundraisers() {
+    const list = document.getElementById('frEventsList');
+    if (!fundraisers.length) {
+      list.innerHTML = '<div class="fr-empty">No fundraisers yet. Add your first event above.</div>';
+      return;
+    }
+    list.innerHTML = fundraisers.map((ev, i) => {
+      const parts = ev.date.split(' ');
+      const month = parts[0] || ev.date;
+      const day   = parts[1] || '';
+      return `
+      <div class="fr-event-card">
+        <div class="fr-event-date">
+          <div class="fr-event-month">${month.slice(0,3).toUpperCase()}</div>
+          <div class="fr-event-day">${day || '—'}</div>
+        </div>
+        <div class="fr-event-body">
+          <div class="fr-event-name">${ev.name.toUpperCase()}</div>
+          <div class="fr-event-desc">${ev.desc || 'Fundraiser event — details coming soon.'}</div>
+        </div>
+        <div class="fr-event-goal">
+          <div class="fr-event-goal-num">$${ev.goal.toLocaleString()}</div>
+          <div class="fr-event-goal-label">Goal</div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function updateMeters() {
+    const combined = SHIRT_RAISED + fundraiserTotal;
+    const pct      = Math.min((combined / GOAL) * 100, 100).toFixed(2);
+    const fmt      = n => '$' + Math.round(n).toLocaleString();
+
+    // Shirt tab meter
+    const f1 = document.getElementById('frMeterFill');
+    const t1 = document.getElementById('frTotalDisplay');
+    const fv = document.getElementById('frFundVal');
+    if (f1) f1.style.width = pct + '%';
+    if (t1) t1.textContent = fmt(combined);
+    if (fv) fv.textContent = fmt(fundraiserTotal);
+
+    // Fundraiser tab meter
+    const f2 = document.getElementById('frMeterFill2');
+    const t2 = document.getElementById('frTotalDisplay2');
+    const fv2 = document.getElementById('frFundVal2');
+    if (f2) f2.style.width = pct + '%';
+    if (t2) t2.textContent = fmt(combined);
+    if (fv2) fv2.textContent = fmt(fundraiserTotal);
+  }
+
+  // Animate meters on scroll in
+  const meterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        setTimeout(updateMeters, 300);
+        meterObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  const meterEl = document.getElementById('frMeterFill');
+  if (meterEl) meterObserver.observe(meterEl);
+
+  // Init empty fundraiser list
+  renderFundraisers();
+
+</script>
+</body>
+</html>
